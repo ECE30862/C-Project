@@ -14,14 +14,47 @@ Map::Map(std::string filename) {
 	xml_node<> * root_node;
 	root_node = doc.first_node("map");
 
-	for (xml_node<> * map_node = root_node->first_node("room"); map_node; map_node = map_node->next_sibling("room"))
-	{
-		string a_name = map_node->first_node("name")->value();
+	xml_node<> * item_node = root_node->first_node("item");
+	xml_node<> * container_node = root_node->first_node("container");
+	xml_node<> * creature_node = root_node->first_node("creature");
+	xml_node<> * room_node = root_node->first_node("room");
+
+	string a_name;
+	while (item_node || container_node || creature_node) {
+		if (item_node) {
+			a_name = item_node->first_node("name")->value();
+			items.push_back(new Item(a_name));
+			item_node = item_node->next_sibling("item");
+		}
+		if (container_node) {
+			a_name = container_node->first_node("name")->value();
+			containers.push_back(new Container(a_name));
+			container_node = container_node->next_sibling("container");
+		}
+		if (creature_node) {
+			a_name = creature_node->first_node("name")->value();
+			creatures.push_back(new Creature(a_name));
+			creature_node = creature_node->next_sibling("creature");
+		}
+	}
+
+	while (room_node) {
+		a_name = room_node->first_node("name")->value();
 		rooms.push_back(new Room(a_name));
+		room_node = room_node->next_sibling("room");
 	}
 
 	for (int i = 0; i < rooms.size(); i++) {
 		cout << "Room: " << rooms[i]->getName() << "\n";
+	}
+	for (int i = 0; i < items.size(); i++) {
+		cout << "Item: " << items[i]->getName() << "\n";
+	}
+	for (int i = 0; i < containers.size(); i++) {
+		cout << "Container: " << containers[i]->getName() << "\n";
+	}
+	for (int i = 0; i < creatures.size(); i++) {
+		cout << "Creature: " << creatures[i]->getName() << "\n";
 	}
 }
 
