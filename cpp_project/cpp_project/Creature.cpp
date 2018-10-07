@@ -1,10 +1,5 @@
 #include "Creature.h"
 
-Creature::Creature(std::string a_name)
-	:name(a_name) {
-
-}
-
-std::string Creature::getName() const {
-	return name;
+Creature::Creature(rapidxml::xml_node<>* a_node)
+	:BaseElement(a_node){
 }

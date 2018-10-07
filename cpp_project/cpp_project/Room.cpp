@@ -1,10 +1,5 @@
 #include "Room.h"
 
-Room::Room(std::string a_name)
-	:name(a_name){
-	
-}
-
-std::string Room::getName() const {
-	return name;
+Room::Room(rapidxml::xml_node<>* a_node)
+	: BaseElement(a_node){
 }

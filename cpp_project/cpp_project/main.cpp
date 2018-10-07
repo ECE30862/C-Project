@@ -1,10 +1,12 @@
-#include "Map.h"
+#include "Game.h"
 
 int main(void) {
 	
-	Map a_map("sample.txt.xml");
+	Game game("sample.txt.xml");
 
 	while (1) {
+		//Main game loop
+
 		std::string user_input;
 		std::cout << "Type 'exit' to quit\n";
 		std::cin >> user_input;

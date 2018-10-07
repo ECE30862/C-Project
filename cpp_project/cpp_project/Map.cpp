@@ -19,43 +19,44 @@ Map::Map(std::string filename) {
 	xml_node<> * creature_node = root_node->first_node("creature");
 	xml_node<> * room_node = root_node->first_node("room");
 
-	string a_name;
 	while (item_node || container_node || creature_node) {
 		if (item_node) {
-			a_name = item_node->first_node("name")->value();
-			items.push_back(new Item(a_name));
+			items.push_back(new Item(item_node));
 			item_node = item_node->next_sibling("item");
 		}
 		if (container_node) {
-			a_name = container_node->first_node("name")->value();
-			containers.push_back(new Container(a_name));
+			containers.push_back(new Container(container_node));
 			container_node = container_node->next_sibling("container");
 		}
 		if (creature_node) {
-			a_name = creature_node->first_node("name")->value();
-			creatures.push_back(new Creature(a_name));
+			creatures.push_back(new Creature(creature_node));
 			creature_node = creature_node->next_sibling("creature");
 		}
 	}
 
 	while (room_node) {
-		a_name = room_node->first_node("name")->value();
-		rooms.push_back(new Room(a_name));
+		rooms.push_back(new Room(room_node));
 		room_node = room_node->next_sibling("room");
 	}
 
-	for (int i = 0; i < rooms.size(); i++) {
-		cout << "Room: " << rooms[i]->getName() << "\n";
-	}
-	for (int i = 0; i < items.size(); i++) {
-		cout << "Item: " << items[i]->getName() << "\n";
-	}
-	for (int i = 0; i < containers.size(); i++) {
-		cout << "Container: " << containers[i]->getName() << "\n";
-	}
-	for (int i = 0; i < creatures.size(); i++) {
-		cout << "Creature: " << creatures[i]->getName() << "\n";
-	}
+	printLists();
 }
 
 Map::~Map(){}
+
+
+void Map::printLists() const {
+	using namespace std;
+	for (int i = 0; i < rooms.size(); i++) {
+		cout << "Room: " << rooms[i]->getName() << ", " << rooms[i]->getStatus() << ", " << rooms[i]->getDescription() << "\n";
+	}
+	for (int i = 0; i < items.size(); i++) {
+		cout << "Item: " << items[i]->getName() << ", " << items[i]->getStatus() << ", " << items[i]->getDescription() << "\n";
+	}
+	for (int i = 0; i < containers.size(); i++) {
+		cout << "Container: " << containers[i]->getName() << ", " << containers[i]->getStatus() << ", " << containers[i]->getDescription() << "\n";
+	}
+	for (int i = 0; i < creatures.size(); i++) {
+		cout << "Creature: " << creatures[i]->getName() << ", " << creatures[i]->getStatus() << ", " << creatures[i]->getDescription() << "\n";
+	}
+}

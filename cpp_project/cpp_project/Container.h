@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
-class Container {
+#include "BaseElement.h"
+
+class Container : public BaseElement {
 private:
-	std::string name;
+	
 public:
-	Container(std::string a_name);
-	std::string getName() const;
+	Container(rapidxml::xml_node<>* a_node);
 };

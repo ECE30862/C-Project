@@ -1,15 +1,9 @@
 #pragma once
-#include "rapidxml-1.13/rapidxml.hpp"
-#include "Room.h"
-#include "Item.h"
-#include "Container.h"
-#include "Creature.h"
-
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-#include <vector>
 
+#include "Room.h"
 
 class Map {
 private:
@@ -20,4 +14,6 @@ private:
 public:
 	Map(std::string filename);
 	~Map();
+
+	void printLists() const;
 };

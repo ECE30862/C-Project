@@ -1,2 +1,10 @@
-﻿  Map.cpp
-  cpp_project.vcxproj -> C:\Users\Paul\source\repos\ece30862_project\C-Project\cpp_project\bin\Debug\cpp_project.exe
+﻿  BaseElement.cpp
+  Container.cpp
+  Creature.cpp
+  Game.cpp
+  Item.cpp
+  Map.cpp
+  Room.cpp
+  main.cpp
+  Generating Code...
+  cpp_project.vcxproj -> C:\Users\Paul\Documents\College\4th year\ECE 30862\project1\C-Project\cpp_project\bin\Debug\cpp_project.exe

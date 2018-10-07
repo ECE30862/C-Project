@@ -1,9 +1,10 @@
 #pragma once
-#include <string>
-class Creature {
+#include "BaseElement.h"
+
+class Creature : public BaseElement{
 private:
-	std::string name;
+	
 public:
-	Creature(std::string a_name);
-	std::string getName() const;
+	Creature(rapidxml::xml_node<>* a_node);
+	
 };
