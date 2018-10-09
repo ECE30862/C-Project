@@ -1,8 +1,4 @@
 #pragma once
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-
 #include "Room.h"
 
 class Map {
@@ -16,4 +12,5 @@ public:
 	~Map();
 
 	void printLists() const;
+	Room* getEntrance() const;
 };

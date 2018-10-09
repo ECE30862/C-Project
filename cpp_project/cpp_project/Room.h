@@ -12,8 +12,19 @@ private:
 
 	std::vector<Item*> items;
 	std::vector<Container*> containers;
-	std::vector<Room*> borders;
+	Room** borders;
 	std::vector<Creature*> creatures;
 public:
 	Room(rapidxml::xml_node<>* a_node);
+
+	std::vector<Item*>& getRefItems();
+	std::vector<Container*>& getRefContainers();
+	Room**& getRefBorders();
+	std::vector<Creature*>& getRefCreatures();
+
+	std::vector<Item*> getItems() const;
+	std::vector<Container*> getContainers() const;
+	Room** getBorders() const;
+	Room* getBorder(std::string str_border) const;
+	std::vector<Creature*> getCreatures() const;
 };

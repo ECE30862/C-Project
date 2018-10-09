@@ -3,15 +3,21 @@
 int main(void) {
 	
 	Game game("sample.txt.xml");
-
+	bool start = true;
 	while (1) {
 		//Main game loop
-
+		if (start) {
+			game.printCurRoom();
+			start = false;
+		}
 		std::string user_input;
-		std::cout << "Type 'exit' to quit\n";
 		std::cin >> user_input;
-		if(user_input == "exit")
+		if (user_input == "quit") {
 			break;
+		}
+		else {
+			game.command(user_input);
+		}
 	}
 	return 0;
 }
