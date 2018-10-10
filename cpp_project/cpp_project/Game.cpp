@@ -13,6 +13,7 @@ void Game::printCurRoom() const {
 	std::cout << cur_room->getDescription() << "\n";
 }
 
+//this function is for user inputs
 void Game::command(std::string user_input) {
 	using namespace std;
 	string str_cmd = user_input.substr(0, user_input.find(" "));
@@ -26,6 +27,14 @@ void Game::command(std::string user_input) {
 			cout << "You can't go that way.\n";
 		}
 	}
+	else if (str_cmd == "i") {
+		cout << "ADD INVENTORY\n";
+	}
+	/*
+	else if (str_cmd == ) {
+		cout << "ADD TAKE COMMAND\n";
+	}
+	*/
 	else {
 		cout << "Err\n";
 	}

@@ -95,7 +95,6 @@ Map::Map(std::string filename) {
 					for (int i = 0; i < rooms.size(); i++) {
 						if (rooms[i]->getName() == room_border_node->first_node("name")->value()) {
 							if ((string)room_border_node->first_node("direction")->value() == "north") {
-								
 								room_borders[0] = rooms[i];
 							}
 							else if ((string)room_border_node->first_node("direction")->value() == "south") {
