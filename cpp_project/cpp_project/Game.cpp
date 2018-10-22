@@ -183,6 +183,12 @@ void Game::command(std::string user_input) {
 				}
 			}
 			//check containers
+			/*
+			THIS NEEDS TO BE DONE
+			CREATE ACCEPT ARRAY
+			"PUT KEY IN LOCK"
+			CREATE IN H FILE AS WELL
+			*/
 			
 			if (!itemFound) {
 				cout << "Error\n";
@@ -195,4 +201,7 @@ void Game::command(std::string user_input) {
 	else{
 		cout << "Error\n";
 	}
+	/*
+	FINISH REST OF COMMANDS
+	*/
 }
