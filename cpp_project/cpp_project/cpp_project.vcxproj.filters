@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp">
+    <ClCompile Include="Action.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
+    <ClCompile Include="BaseElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Container.cpp">
@@ -33,13 +33,13 @@
     <ClCompile Include="Creature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseElement.cpp">
+    <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Action.cpp">
+    <ClCompile Include="Room.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Trigger.cpp">
@@ -59,13 +59,13 @@
     <ClInclude Include="rapidxml-1.13\rapidxml_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
+    <ClInclude Include="Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
+    <ClInclude Include="BaseElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Container.h">
@@ -74,13 +74,13 @@
     <ClInclude Include="Creature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BaseElement.h">
+    <ClInclude Include="Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Action.h">
+    <ClInclude Include="Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Trigger.h">

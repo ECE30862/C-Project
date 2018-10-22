@@ -15,6 +15,7 @@ private:
 	Room** borders;
 	std::vector<Creature*> creatures;
 public:
+
 	Room(rapidxml::xml_node<>* a_node);
 
 	std::vector<Item*>& getRefItems();

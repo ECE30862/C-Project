@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseElement.h"
+#include <string>
 
 enum ACTION_TYPE {UPDATE, ADD, DELETE, NONE};
 

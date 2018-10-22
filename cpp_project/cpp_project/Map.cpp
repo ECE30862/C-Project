@@ -53,10 +53,10 @@ Map::Map(std::string filename) {
 		if (room_node) {
 			Room* cur_room = rooms[room_idx];
 			room_idx++;
-			std::vector<Item*> room_items = cur_room->getRefItems();
-			std::vector<Container*> room_containers = cur_room->getRefContainers();
+			std::vector<Item*>& room_items = cur_room->getRefItems();
+			std::vector<Container*>& room_containers = cur_room->getRefContainers();
 			Room** room_borders = cur_room->getRefBorders();
-			std::vector<Creature*> room_creatures = cur_room->getRefCreatures();
+			std::vector<Creature*>& room_creatures = cur_room->getRefCreatures();
 
 			room_creature_node = room_node->first_node("creature");
 			room_container_node = room_node->first_node("container");
@@ -66,6 +66,7 @@ Map::Map(std::string filename) {
 			while (room_item_node || room_container_node || room_creature_node || room_border_node) {
 				if (room_item_node) {
 					for (int i = 0; i < items.size(); i++) {
+						
 						if (items[i]->getName() == room_item_node->value()) {
 							room_items.push_back(items[i]);
 							break;
@@ -120,7 +121,7 @@ Map::Map(std::string filename) {
 			Container* cur_container = containers[container_idx];
 			container_idx++;
 
-			std::vector<Item*> container_items = cur_container->getRefItems();
+			std::vector<Item*>& container_items = cur_container->getRefItems();
 			container_item_node = container_node->first_node("item");
 
 			while (container_item_node) {
@@ -147,7 +148,8 @@ Map::~Map(){}
 void Map::printLists() const {
 	using namespace std;
 	for (int i = 0; i < rooms.size(); i++) {
-		cout << "Room: " << rooms[i]->getName() << "\n";
+		cout << "Room: " << rooms[i]->getName() << " - item count: " << rooms[i]->getItems().size() << "\n";
+		
 	}
 	for (int i = 0; i < items.size(); i++) {
 		//cout << "Item: " << items[i]->getName() << "\n";

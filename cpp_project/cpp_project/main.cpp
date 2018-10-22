@@ -11,7 +11,7 @@ int main(void) {
 			start = false;
 		}
 		std::string user_input;
-		std::cin >> user_input;
+		getline(std::cin, user_input);
 		if (user_input == "quit") {
 			break;
 		}

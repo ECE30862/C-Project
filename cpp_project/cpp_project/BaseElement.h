@@ -1,10 +1,5 @@
 #pragma once
-#include <string>
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-
-#include "rapidxml-1.13/rapidxml.hpp"
+#include "Trigger.h"
 
 class BaseElement {
 protected:
@@ -12,7 +7,7 @@ protected:
 	std::string status;
 	std::string description;
 public:
-
+	std::vector<Trigger> triggers;
 	BaseElement(rapidxml::xml_node<>* a_node);
 
 	void setName(const std::string& a_name);
