@@ -38,34 +38,73 @@ bool Game::checkTriggers(std::vector<Trigger>& a_triggers, std::string str_cmd) 
 								}
 							}
 						}
+						else if(cur_cond.owner == cur_room->getName()){
+							for (int k = 0; k < cur_room->getItems().size(); k++) {
+								if (cur_cond.has && cur_room->getItems()[k]->getName() == cur_cond.object) {
+									triggered = true;
+									break;
+								}
+								else if (!cur_cond.has && cur_room->getItems()[k]->getName() == cur_cond.object) {
+									triggered = false;
+									break;
+								}
+							}
+						
+						}
 						else {
-							/*
-							for (int k = 0; k < map->rooms.size(); k++) {
-								if (cur_cond.owner == map->rooms[k]->getName()) {
-									for (int p = 0; p < map->rooms[k]->getItems().size(); p++) {
-										if (cur_cond.has && inventory[k]->getName() == cur_cond.object) {
+							for (int k = 0; k < cur_room->getContainers().size(); k++) {
+								if (cur_cond.owner == cur_room->getContainers()[k]->getName()) {
+									for (int p = 0; p < cur_room->getContainers()[k]->getItems().size(); p++) {
+										if (cur_cond.has && cur_room->getContainers()[k]->getItems()[p]->getName() == cur_cond.object) {
 											triggered = true;
 											break;
 										}
-										else if (!cur_cond.has && inventory[k]->getName() == cur_cond.object) {
+										else if (!cur_cond.has && cur_room->getContainers()[k]->getItems()[p]->getName() == cur_cond.object) {
 											triggered = false;
 											break;
 										}
 									}
 								}
-								for (int p = 0; p < map->rooms[k]->getContainers().size(); p++) {
-									if (cur_cond.owner == map->rooms[k]->getContainers()[p]->getName()) {
-										
-										break;
-									}
+								if (triggered) {
+									break;
 								}
-								
-							}*/
+							}
 						}
 					}
 					else {
 						//status check
-
+						if (cur_cond.object == cur_room->getName() && cur_cond.status == cur_room->getStatus()) {
+							triggered = true;
+						}
+						else {
+							//items in room
+							for (int k = 0; k < cur_room->getItems().size(); k++) {
+								if (cur_cond.object == cur_room->getItems()[k]->getName() && cur_cond.status == cur_room->getItems()[k]->getStatus()) {
+									triggered = true;
+									break;
+								}
+							}
+							if (triggered) {
+								break;
+							}
+							//containers in room
+							for (int k = 0; k < cur_room->getContainers().size(); k++) {
+								if (cur_cond.object == cur_room->getContainers()[k]->getName() && cur_cond.status == cur_room->getContainers()[k]->getStatus()) {
+									triggered = true;
+									break;
+								}
+								for (int p = 0; p < cur_room->getContainers()[k]->getItems().size(); p++) {
+									if (cur_cond.object == cur_room->getContainers()[k]->getItems()[p]->getName() && cur_cond.status == cur_room->getContainers()[k]->getItems()[p]->getStatus()) {
+										triggered = true;
+										break;
+									}
+								}
+								if (triggered) {
+									break;
+								}
+							}
+							
+						}
 					}
 					if (!triggered) {
 						break;
@@ -86,7 +125,9 @@ bool Game::checkTriggers(std::vector<Trigger>& a_triggers, std::string str_cmd) 
 					}
 				}
 				if (cmd_block) {
-					//perform actions
+					for (int j = 0; j < cur_trig.actions.size(); j++) {
+						performAction(cur_trig.actions[j]);
+					}
 
 					cur_trig.used = true;
 					for (int j = 0; j < cur_trig.prints.size(); j++) {
@@ -96,6 +137,9 @@ bool Game::checkTriggers(std::vector<Trigger>& a_triggers, std::string str_cmd) 
 			}
 			else {
 				//perform actions
+				for (int j = 0; j < cur_trig.actions.size(); j++) {
+					performAction(cur_trig.actions[j]);
+				}
 
 				cur_trig.used = true;
 				for (int j = 0; j < cur_trig.prints.size(); j++) {
@@ -110,20 +154,23 @@ bool Game::checkTriggers(std::vector<Trigger>& a_triggers, std::string str_cmd) 
 
 bool Game::checkAllTriggers(std::string user_input) {
 	bool cmd_block = false;
+
 	cmd_block = cmd_block || checkTriggers(cur_room->triggers, user_input);
-	/*
+	
 	for (int i = 0; i < cur_room->getCreatures().size(); i++) {
-	cmd_block = cmd_block || checkTriggers(cur_room->getCreatures()[i]->triggers, user_input);
+		cmd_block = cmd_block || checkTriggers(cur_room->getCreatures()[i]->triggers, user_input);
 	}
+
 	for (int i = 0; i < cur_room->getContainers().size(); i++) {
-	cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->triggers, user_input);
-	for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
-	cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->getItems()[j]->triggers, user_input);
+		cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->triggers, user_input);
+		for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
+			cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->getItems()[j]->triggers, user_input);
+		}
 	}
-	}
+
 	for (int i = 0; i < cur_room->getItems().size(); i++) {
-	cmd_block = cmd_block || checkTriggers(cur_room->getItems()[i]->triggers, user_input);
-	}*/
+		cmd_block = cmd_block || checkTriggers(cur_room->getItems()[i]->triggers, user_input);
+	}
 	return cmd_block;
 }
 
@@ -183,14 +230,58 @@ void Game::command(std::string user_input) {
 				}
 			}
 			//check containers
-			/*
-			THIS NEEDS TO BE DONE
-			CREATE ACCEPT ARRAY
-			"PUT KEY IN LOCK"
-			CREATE IN H FILE AS WELL
-			*/
+			if (!itemFound) {
+				for (int i = 0; i < cur_room->getContainers().size(); i++) {
+
+					if (cur_room->getContainers()[i]->open) {
+						for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
+							if (cur_room->getContainers()[i]->getItems()[j]->getName() == input) {
+								Item* changing_item = cur_room->getContainers()[i]->getItems()[j];
+								cur_room->getContainers()[i]->getRefItems().erase(cur_room->getContainers()[i]->getRefItems().begin() + i);
+								inventory.push_back(changing_item);
+								itemFound = true;
+								cout << "Item " << changing_item->getName() << " added to inventory.\n";
+								break;
+							}
+						}
+					}
+					if (itemFound) {
+						break;
+					}
+				}
+			}
 			
 			if (!itemFound) {
+				cout << "Error\n";
+			}
+		}
+	}
+	else if (str_cmd == "open") {
+		if (!checkAllTriggers(user_input)) {
+			bool containerFound = false;
+			for (int i = 0; i < cur_room->getContainers().size(); i++) {
+				if (cur_room->getContainers()[i]->getName() == input) {
+					cout << cur_room->getContainers()[i]->getName() << " ";
+					if (cur_room->getContainers()[i]->getItems().size() == 0) {
+						cout << "is empty.\n";
+					}
+					else {
+						cout << "contains ";
+						for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
+							cout << cur_room->getContainers()[i]->getItems()[j]->getName();
+							if (j < cur_room->getContainers()[i]->getItems().size() - 1) {
+								cout << ", ";
+							}
+							else {
+								cout << ".\n";
+							}
+						}
+					}
+					containerFound = true;
+					break;
+				}
+			}
+			if (!containerFound) {
 				cout << "Error\n";
 			}
 		}
