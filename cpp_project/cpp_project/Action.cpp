@@ -18,6 +18,11 @@ Action::Action(std::string action_line) {
 		str_left = str_action;
 		str_right = "";
 	}
+	else if (str_action == "Game Over") {
+		action_type = GAME_OVER;
+		str_left = "";
+		str_right = "";
+	}
 	else {
 		action_type = NONE;
 		str_left = "";

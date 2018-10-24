@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-enum ACTION_TYPE {UPDATE, ADD, DELETE, NONE};
+enum ACTION_TYPE {UPDATE, ADD, DELETE, NONE, GAME_OVER};
 
 class Action {
 private:

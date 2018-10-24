@@ -8,7 +8,6 @@ class Container : public BaseElement {
 private:
 	std::vector<Item*> items;
 public:
-	bool open;
 	std::vector<std::string> accept;
 	Container(rapidxml::xml_node<>* a_node);
 

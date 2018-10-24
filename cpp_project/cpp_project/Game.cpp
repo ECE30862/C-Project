@@ -190,6 +190,7 @@ void Game::command(std::string user_input) {
 			if (cur_room->getBorder(str_cmd)) {
 				cur_room = cur_room->getBorder(str_cmd);
 				printCurRoom();
+				checkAllTriggers(user_input);
 			}
 			else {
 				cout << "You can't go that way.\n";
@@ -233,7 +234,7 @@ void Game::command(std::string user_input) {
 			if (!itemFound) {
 				for (int i = 0; i < cur_room->getContainers().size(); i++) {
 
-					if (cur_room->getContainers()[i]->open) {
+					if (cur_room->getContainers()[i]->getStatus() != "locked") {
 						for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
 							if (cur_room->getContainers()[i]->getItems()[j]->getName() == input) {
 								Item* changing_item = cur_room->getContainers()[i]->getItems()[j];
@@ -251,6 +252,51 @@ void Game::command(std::string user_input) {
 				}
 			}
 			
+			if (!itemFound) {
+				cout << "Error\n";
+			}
+			else {
+				checkAllTriggers(user_input);
+			}
+			
+		}
+	}
+	else if (str_cmd == "drop") {
+		if (!checkAllTriggers(user_input)) {
+			bool itemFound = false;
+			for (int i = 0; i < inventory.size(); i++) {
+				if (inventory[i]->getName() == input) {
+					Item* changing_item = inventory[i];
+					inventory.erase(inventory.begin() + i);
+					cur_room->getRefItems().push_back(changing_item);
+					itemFound = true;
+					cout << changing_item->getName() << " dropped.\n";
+					break;
+				}
+			}
+			if (!itemFound) {
+				cout << "Error\n";
+			}
+			else {
+				checkAllTriggers(user_input);
+			}
+		}
+	}
+	else if (str_cmd == "read") {
+		if (!checkAllTriggers(user_input)) {
+			bool itemFound = false;
+			for (int i = 0; i < inventory.size(); i++) {
+				if (inventory[i]->getName() == input) {
+					itemFound = true;
+					if (inventory[i]->writing != "") {
+						cout << inventory[i]->writing << "\n";
+					}
+					else {
+						cout << "Nothing written.\n";
+					}
+					break;
+				}
+			}
 			if (!itemFound) {
 				cout << "Error\n";
 			}
@@ -285,6 +331,9 @@ void Game::command(std::string user_input) {
 				cout << "Error\n";
 			}
 		}
+	}
+	else if (str_cmd == "put") {
+
 	}
 	else if (str_cmd == "print") {
 		map->printLists();

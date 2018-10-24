@@ -10,7 +10,6 @@ Container::Container(rapidxml::xml_node<>* a_node)
 		accept.push_back(accept_node->value());
 		accept_node = accept_node->next_sibling("accept");
 	}
-	open = accept.size() == 0;
 }
 
 std::vector<Item*>& Container::getRefItems() { return items; }
