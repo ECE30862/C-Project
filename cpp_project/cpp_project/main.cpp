@@ -4,7 +4,7 @@ int main(void) {
 	
 	Game game("sample.txt.xml");
 	bool start = true;
-	while (1) {
+	while (!game.gameOver) {
 		//Main game loop
 		if (start) {
 			game.printCurRoom();
@@ -19,5 +19,7 @@ int main(void) {
 			game.command(user_input);
 		}
 	}
+	std::cout << "Game Over!\n";
+	system("PAUSE");
 	return 0;
 }

@@ -142,7 +142,28 @@ Map::Map(std::string filename) {
 	//printLists();
 }
 
-Map::~Map(){}
+Map::~Map(){
+	for (int i = 0; i < rooms.size(); i++) {
+		Room * temp = rooms[i];
+		rooms.erase(rooms.begin() + i);
+		delete temp;
+	}
+	for (int i = 0; i < containers.size(); i++) {
+		Container * temp = containers[i];
+		containers.erase(containers.begin() + i);
+		delete temp;
+	}
+	for (int i = 0; i < creatures.size(); i++) {
+		Creature * temp = creatures[i];
+		creatures.erase(creatures.begin() + i);
+		delete temp;
+	}
+	for (int i = 0; i < items.size(); i++) {
+		Item * temp = items[i];
+		items.erase(items.begin() + i);
+		delete temp;
+	}
+}
 
 
 void Map::printLists() const {

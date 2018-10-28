@@ -3,9 +3,10 @@
 
 class Item : public BaseElement{
 private:
+public:
 	Action* action;
 	std::string turnon;
-public:
+	bool hasTurnOn;
 	std::string writing;
 	Item(rapidxml::xml_node<>* a_node);
 	~Item();

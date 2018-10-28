@@ -14,8 +14,8 @@ Action::Action(std::string action_line) {
 		str_right = action_line.substr(action_line.find("to ") + 3);
 	}
 	else if (str_action == "Delete") {
-		action_type = ADD;
-		str_left = str_action;
+		action_type = DELETE;
+		str_left = action_line;
 		str_right = "";
 	}
 	else if (str_action == "Game Over") {

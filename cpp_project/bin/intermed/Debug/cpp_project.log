@@ -1,12 +1,6 @@
-﻿  Action.cpp
-  BaseElement.cpp
-  Container.cpp
-  Creature.cpp
-  Game.cpp
-  Item.cpp
+﻿  Game.cpp
   Map.cpp
   Room.cpp
-  Trigger.cpp
   main.cpp
   Generating Code...
   cpp_project.vcxproj -> C:\Users\Paul\Documents\College\4th year\ECE 30862\project1\C-Project\cpp_project\bin\Debug\cpp_project.exe

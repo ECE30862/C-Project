@@ -8,7 +8,6 @@
 
 class Room : public BaseElement{
 private:
-	std::string type;
 
 	std::vector<Item*> items;
 	std::vector<Container*> containers;
@@ -18,6 +17,7 @@ public:
 
 	Room(rapidxml::xml_node<>* a_node);
 
+	std::string type;
 	std::vector<Item*>& getRefItems();
 	std::vector<Container*>& getRefContainers();
 	Room**& getRefBorders();

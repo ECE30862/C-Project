@@ -8,9 +8,11 @@ Item::Item(rapidxml::xml_node<>* a_node)
 	if (a_node->first_node("turnon")) {
 		turnon = a_node->first_node("turnon")->first_node("print") ? a_node->first_node("turnon")->first_node("print")->value() : "";
 		action = new Action(a_node->first_node("turnon")->first_node("action")->value());
+		hasTurnOn = true;
 	}
 	else {
 		turnon = "";
+		hasTurnOn = false;
 		action = NULL;
 	}
 }
