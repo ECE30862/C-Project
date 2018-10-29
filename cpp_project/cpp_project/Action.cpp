@@ -1,6 +1,7 @@
 #include "Action.h"
 
 Action::Action(std::string action_line) {
+	std::string orig_line = action_line;
 	std::string str_action = action_line.substr(0, action_line.find(" "));
 	action_line = action_line.erase(0, action_line.find(" ") + 1);
 	if (str_action == "Update") {
@@ -18,14 +19,14 @@ Action::Action(std::string action_line) {
 		str_left = action_line;
 		str_right = "";
 	}
-	else if (str_action == "Game Over") {
+	else if (orig_line == "Game Over") {
 		action_type = GAME_OVER;
 		str_left = "";
 		str_right = "";
 	}
 	else {
-		action_type = NONE;
-		str_left = "";
+		action_type = CMD;
+		str_left = orig_line;
 		str_right = "";
 	}
 }

@@ -2,7 +2,7 @@
 
 int main(void) {
 	
-	Game game("sample.txt.xml");
+	Game game("creaturesample.xml");
 	bool start = true;
 	while (!game.gameOver) {
 		//Main game loop

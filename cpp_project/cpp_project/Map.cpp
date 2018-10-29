@@ -5,7 +5,7 @@ Map::Map(std::string filename) {
 	using namespace std;
 	xml_document<> doc;
 
-	ifstream xml_file("sample.txt.xml");
+	ifstream xml_file(filename);
 	vector<char> buffer((istreambuf_iterator<char>(xml_file)), istreambuf_iterator<char>());
 	buffer.push_back('\0');
 

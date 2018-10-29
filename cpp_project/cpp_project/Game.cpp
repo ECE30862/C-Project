@@ -140,25 +140,26 @@ bool Game::checkTriggers(std::vector<Trigger>& a_triggers, std::string str_cmd) 
 					}
 				}
 				if (cmd_block) {
-					for (int j = 0; j < cur_trig.actions.size(); j++) {
-						performAction(cur_trig.actions[j]);
-					}
 
 					cur_trig.used = true;
 					for (int j = 0; j < cur_trig.prints.size(); j++) {
 						std::cout << cur_trig.prints[j] << "\n";
 					}
+					for (int j = 0; j < cur_trig.actions.size(); j++) {
+						performAction(cur_trig.actions[j]);
+					}
 				}
 			}
 			else {
 				//perform actions
-				for (int j = 0; j < cur_trig.actions.size(); j++) {
-					performAction(cur_trig.actions[j]);
-				}
 
 				cur_trig.used = true;
 				for (int j = 0; j < cur_trig.prints.size(); j++) {
 					std::cout << cur_trig.prints[j] << "\n";
+				}
+
+				for (int j = 0; j < cur_trig.actions.size(); j++) {
+					performAction(cur_trig.actions[j]);
 				}
 			}
 			
@@ -309,6 +310,9 @@ void Game::performAction(Action a_action) {
 	case GAME_OVER:
 		gameOver = true;
 		break;
+	case CMD:
+		command(a_action.getLeft());
+		break;
 	}
 }
 
@@ -428,7 +432,8 @@ void Game::command(std::string user_input) {
 			if (!itemFound) {
 				for (int i = 0; i < cur_room->getContainers().size(); i++) {
 
-					if (cur_room->getContainers()[i]->getStatus() != "locked") {
+					if (cur_room->getContainers()[i]->getStatus() != "locked"
+						&& cur_room->getContainers()[i]->opened != false) {
 						for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
 							if (cur_room->getContainers()[i]->getItems()[j]->getName() == input) {
 								Item* changing_item = cur_room->getContainers()[i]->getItems()[j];
@@ -506,6 +511,7 @@ void Game::command(std::string user_input) {
 				for (int i = 0; i < cur_room->getContainers().size(); i++) {
 					if (cur_room->getContainers()[i]->getName() == input) {
 						cout << cur_room->getContainers()[i]->getName() << " ";
+						cur_room->getRefContainers()[i]->opened = true;
 						if (cur_room->getContainers()[i]->getItems().size() == 0) {
 							cout << "is empty.\n";
 						}
@@ -606,12 +612,13 @@ void Game::command(std::string user_input) {
 								std::vector<std::string> temp_prints = cur_room->getCreatures()[i]->attk->prints;
 								cout << "You assault the " << cur_room->getCreatures()[i]->getName() << " with the ";
 								cout << item_name << ".\n";
-								for (int j = 0; j < temp_actions.size(); j++) {
-									performAction(temp_actions[j]);
-									
-								}
+						
 								for (int j = 0; j < temp_prints.size(); j++) {
 									cout << temp_prints[j] << "\n";
+								}
+								for (int j = 0; j < temp_actions.size(); j++) {
+									performAction(temp_actions[j]);
+
 								}
 							}
 							else {

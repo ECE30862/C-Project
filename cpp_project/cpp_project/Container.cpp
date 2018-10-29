@@ -4,7 +4,7 @@ Container::Container(rapidxml::xml_node<>* a_node)
 	: BaseElement(a_node){
 	using namespace rapidxml;
 	using namespace std;
-
+	opened = false;
 	xml_node<>* accept_node = a_node->first_node("accept");
 	while (accept_node) {
 		accept.push_back(accept_node->value());
