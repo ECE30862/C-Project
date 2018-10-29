@@ -531,7 +531,7 @@ void Game::command(std::string user_input) {
 			}
 		}
 	}
-	else if (str_cmd == "put") {
+	else if (str_cmd == "put" && input.size() >= 6) {
 		if (!checkAllTriggers(user_input)) {
 			std::string item_name = input.substr(0, input.find(" "));
 			std::string place_name = input.substr(input.find("in ") + 3);
@@ -545,6 +545,7 @@ void Game::command(std::string user_input) {
 								for (int k = 0; k < cur_room->getContainers()[j]->accept.size(); k++) {
 									if (item_name == cur_room->getContainers()[j]->accept[k]) {
 										found = true;
+										cout << "Item " << item_name << " added to " << cur_room->getContainers()[j]->getName() << ".\n";
 										cur_room->getContainers()[j]->getRefItems().push_back(inventory[i]);
 										inventory.erase(inventory.begin() + i);
 									}
@@ -552,6 +553,7 @@ void Game::command(std::string user_input) {
 							}
 							else {
 								found = true;
+								cout << "Item " << item_name << " added to " << cur_room->getContainers()[j]->getName() << ".\n";
 								cur_room->getContainers()[j]->getRefItems().push_back(inventory[i]);
 								inventory.erase(inventory.begin() + i);
 							}
@@ -571,7 +573,7 @@ void Game::command(std::string user_input) {
 		}
 
 	}
-	else if (str_cmd == "attack") {
+	else if (str_cmd == "attack" && input.size() >= 8) {
 		if (!checkAllTriggers(user_input)) {
 			bool found = false;
 			std::string creature_name = input.substr(0, input.find(" "));
@@ -602,6 +604,8 @@ void Game::command(std::string user_input) {
 							if (triggered) {
 								std::vector<Action> temp_actions = cur_room->getCreatures()[i]->attk->actions;
 								std::vector<std::string> temp_prints = cur_room->getCreatures()[i]->attk->prints;
+								cout << "You assault the " << cur_room->getCreatures()[i]->getName() << " with the ";
+								cout << item_name << ".\n";
 								for (int j = 0; j < temp_actions.size(); j++) {
 									performAction(temp_actions[j]);
 									
@@ -628,12 +632,14 @@ void Game::command(std::string user_input) {
 			
 		}
 	}
-	else if (str_cmd == "turnon") {
+	else if (str_cmd == "turn" && input.size() > 2 && input.substr(0,2) == "on") {
 		if (!checkAllTriggers(user_input)) {
 			bool found = false;
+			std::string item_name = user_input.substr(user_input.find("on ")+3);
 			for (int i = 0; i < inventory.size(); i++) {
-				if (inventory[i]->getName() == input && inventory[i]->hasTurnOn){
+				if (inventory[i]->getName() == item_name && inventory[i]->hasTurnOn){
 					found = true;
+					cout << "You activate the " << item_name << ".\n";
 					performAction(*(inventory[i]->action));
 					if (inventory[i]->turnon != "") {
 						cout << inventory[i]->turnon << "\n";
