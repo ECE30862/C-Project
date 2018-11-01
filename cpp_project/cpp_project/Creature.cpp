@@ -49,7 +49,9 @@ Creature::Creature(rapidxml::xml_node<>* a_node)
 		vuln_node = vuln_node->next_sibling("vulnerability");
 	}
 	xml_node<>* attk_node = a_node->first_node("attack");
-	attk = new Attack(attk_node);
+	if (attk_node) {
+		attk = new Attack(attk_node);
+	}
 }
 
 Creature::~Creature() {

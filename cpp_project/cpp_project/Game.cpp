@@ -175,13 +175,15 @@ bool Game::checkAllTriggers(std::string user_input) {
 	
 	for (int i = 0; i < cur_room->getCreatures().size(); i++) {
 		cmd_block = cmd_block || checkTriggers(cur_room->getCreatures()[i]->triggers, user_input);
+
 	}
 
 	for (int i = 0; i < cur_room->getContainers().size(); i++) {
-		cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->triggers, user_input);
 		for (int j = 0; j < cur_room->getContainers()[i]->getItems().size(); j++) {
 			cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->getItems()[j]->triggers, user_input);
 		}
+		cmd_block = cmd_block || checkTriggers(cur_room->getContainers()[i]->triggers, user_input);
+
 	}
 
 	for (int i = 0; i < cur_room->getItems().size(); i++) {
@@ -582,6 +584,7 @@ void Game::command(std::string user_input) {
 	else if (str_cmd == "attack" && input.size() >= 8) {
 		if (!checkAllTriggers(user_input)) {
 			bool found = false;
+			bool bad_attack = false;
 			std::string creature_name = input.substr(0, input.find(" "));
 			std::string item_name = input.substr(input.find("with ") + 5);
 
@@ -595,6 +598,11 @@ void Game::command(std::string user_input) {
 				found = false;
 				for (int i = 0; i < cur_room->getCreatures().size(); i++) {
 					if (cur_room->getCreatures()[i]->getName() == creature_name) {
+						if (!(cur_room->getCreatures()[i]->attk
+							&& cur_room->getCreatures()[i]->vulnerabilities.size() > 0)) {
+							bad_attack = true;
+							found = true;
+						}
 						for (int j = 0; j < cur_room->getCreatures()[i]->vulnerabilities.size(); j++) {
 							if (cur_room->getCreatures()[i]->vulnerabilities[j] == item_name) {
 								found = true;
@@ -602,7 +610,7 @@ void Game::command(std::string user_input) {
 							}
 						}
 
-						if (found) {
+						if (found && !bad_attack) {
 							bool triggered = true;
 							for (int j = 0; j < cur_room->getCreatures()[i]->attk->conditions.size(); j++) {
 								triggered = triggered && checkCondition(cur_room->getCreatures()[i]->attk->conditions[j]);
@@ -625,6 +633,11 @@ void Game::command(std::string user_input) {
 								found = false;
 							}
 							break;
+						}
+						else if (bad_attack) {
+							cout << "You assault the " << cur_room->getCreatures()[i]->getName() << " with the ";
+							cout << item_name << ".\n";
+
 						}
 					}
 				}
