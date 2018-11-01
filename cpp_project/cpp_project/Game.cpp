@@ -647,10 +647,11 @@ void Game::command(std::string user_input) {
 				if (inventory[i]->getName() == item_name && inventory[i]->hasTurnOn){
 					found = true;
 					cout << "You activate the " << item_name << ".\n";
-					performAction(*(inventory[i]->action));
+					
 					if (inventory[i]->turnon != "") {
 						cout << inventory[i]->turnon << "\n";
 					}
+					performAction(*(inventory[i]->action));
 					break;
 
 				}
